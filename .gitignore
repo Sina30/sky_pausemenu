@@ -1,0 +1,8 @@
+# Kartendaten, Blip-Icons und Hintergrundbild gehören nicht zum Code dieses Projekts
+# und werden lokal abgelegt (siehe README -> Kartendaten und Blip-Icons)
+html/map-data.js
+html/zones.js
+html/blips/*
+!html/blips/.gitkeep
+html/img/*
+!html/img/.gitkeep

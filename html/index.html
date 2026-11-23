@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>sky_pausemenu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 3D-Karte: eine WebGL-Fläche für Pausenkarte (groß) und Minimap (klein) -->
+    <div id="glWrap" class="hidden">
+        <canvas id="gl"></canvas>
+        <svg class="route" id="route"><polyline id="routeLine" points=""></polyline></svg>
+        <div id="labels"></div>
+        <div id="marks"></div>
+        <div class="ring hidden" id="ring"></div>
+        <div class="card hidden" id="card"></div>
+    </div>
+
+    <!-- Pausenkarte: Bedienelemente -->
+    <div id="map" class="hidden">
+        <div class="layer" id="layer"></div>
+        <aside class="panel map-panel">
+            <h1 class="title" id="catTitle">PERSÖNLICH</h1>
+            <div class="map-side">
+                <ul class="cats" id="cats"></ul>
+                <ul class="list" id="list"></ul>
+            </div>
+        </aside>
+        <div class="compass" id="compass"><span>N</span></div>
+        <div class="area"><div id="areaName"></div><div id="countyName"></div></div>
+        <footer class="hints vertical" id="mapHints"></footer>
+        <div class="loading hidden" id="loading"></div>
+    </div>
+
+    <!-- Pausenmenü -->
+    <div id="menu" class="hidden">
+        <aside class="panel">
+            <div class="brand" id="brand"></div>
+            <ul class="items" id="items"></ul>
+            <div class="panel-foot" id="playerLine"></div>
+        </aside>
+        <header class="topinfo" id="topinfo"></header>
+        <section class="content hidden" id="content"></section>
+        <footer class="hints" id="menuHints"></footer>
+    </div>
+
+    <!-- Einstellungen (Vollbild) -->
+    <div id="settings" class="hidden">
+        <div class="st-palms" id="stPalms"></div>
+        <h1 class="st-title">EINSTELLUNGEN</h1>
+        <nav class="st-tabs" id="stTabs"></nav>
+        <section class="st-left">
+            <h2 id="stSection"></h2>
+            <ul class="st-rows" id="stRows"></ul>
+            <div class="st-count" id="stCount"></div>
+        </section>
+        <div class="st-scroll"><i id="stThumb"></i></div>
+        <section class="st-right">
+            <h2 id="stDescTitle"></h2>
+            <p id="stDesc"></p>
+        </section>
+        <footer class="hints" id="stHints"></footer>
+    </div>
+
+    <!-- Freie Kamera -->
+    <div id="freecam" class="hidden">
+        <div class="grid hidden" id="grid"><i></i><i></i><i></i><i></i><b></b></div>
+        <div class="fc-hud" id="fcHud"></div>
+    </div>
+
+    <!-- Bestätigung -->
+    <div id="ask" class="hidden">
+        <div class="ask-box">
+            <h2 id="askTitle"></h2>
+            <p id="askText"></p>
+            <div class="ask-btns">
+                <button id="askYes">JA</button>
+                <button id="askNo" class="ghost">NEIN</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="map-data.js"></script>
+    <script src="zones.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>

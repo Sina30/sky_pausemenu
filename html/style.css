@@ -340,3 +340,6 @@ button.sel { outline: .3vh solid var(--accent); }
 .st-key.empty { opacity: .75; font-weight: 500; }
 .st-row.sel .st-key { background: rgba(60, 30, 80, .12); border-color: rgba(60, 30, 80, .25); }
 .st-trash { display: flex; opacity: .75; } .st-trash svg { width: 2.1vh; height: 2.1vh; }
+
+#card { z-index: 100; }
+#ring { z-index: 60; }

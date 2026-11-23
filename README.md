@@ -6,10 +6,25 @@ Ein komplett neues Pausenmenü für FiveM im Stil von GTA VI: eigene **3D-Karte*
 - **Keine Datenbank**, keine Items, keine Abhängigkeiten
 - **Keine Blip-Einrichtung:** jeder Blip, den irgendein Script erstellt, erscheint automatisch auf der Karte
 
+![3D-Karte mit Infokarte](screenshots/02-karte-infokarte.png)
+
+## Screenshots
+
+| | |
+|---|---|
+| ![Pausenmenü](screenshots/01-pausenmenue.png) **Pausenmenü** | ![3D-Karte](screenshots/03-karte-3d.png) **3D-Karte mit GPS-Route** |
+| ![Kartenübersicht](screenshots/04-karte-uebersicht.png) **Übersicht mit Stadtteilen und Blips** | ![Nacht](screenshots/05-karte-nacht.png) **Nachtlook nach Spieluhr** |
+| ![Minimap](screenshots/06-minimap.png) **3D-Minimap (vergrößert)** | ![Einstellungen](screenshots/07-einstellungen.png) **Einstellungen wie GTA** |
+| ![Tastenbelegung](screenshots/08-tastenbelegung.png) **Tastenbelegung mit 13 Kategorien** | ![Freie Kamera](screenshots/09-freie-kamera.png) **Freie Kamera** |
+| ![Shop](screenshots/10-shop.png) **Shop-Seite** | |
+
+> Die Bilder sind mit Beispieldaten erstellt. Im Spiel kommen Blips, Route, Werte und Tasten live aus GTA.
+
 ---
 
 ## Inhalt
 
+- [Screenshots](#screenshots)
 - [Funktionen](#funktionen)
 - [Installation](#installation)
 - [Tasten](#tasten)

@@ -57,22 +57,46 @@ local function scanBlips()
     return list
 end
 
--- echte GPS-Route zum Wegpunkt (Punkte entlang der Straße)
+-- Punkte entlang der GTA-Route in einem GPS-Slot sammeln (0 = Wegpunkt, 1 = Blip-Route)
+-- Ende der Route: GTA liefert keinen Punkt mehr, der Punkt bewegt sich nicht mehr oder das Ziel ist erreicht.
+local function sampleRoute(slot, wx, wy, step, maxPoints)
+    local pts, len = {}, 0.0
+    local px, py
+    local still = 0
+    for i = 0, maxPoints - 1 do
+        local ok, pos = GetPosAlongGpsTypeRoute(true, i * step, slot)
+        if not ok or not pos or (pos.x == 0.0 and pos.y == 0.0) then break end
+        if px then
+            local seg = math.sqrt((pos.x - px) ^ 2 + (pos.y - py) ^ 2)
+            if seg < 0.5 then
+                still = still + 1
+                if still >= 2 then break end -- Routenende erreicht
+            else
+                still = 0
+                len = len + seg
+            end
+        end
+        pts[#pts + 1] = { pos.x, pos.y, pos.z }
+        px, py = pos.x, pos.y
+        if math.sqrt((pos.x - wx) ^ 2 + (pos.y - wy) ^ 2) < step * 0.75 then break end
+    end
+    return pts, len
+end
+
+-- echte GPS-Route zum Wegpunkt (folgt den Straßen wie die GTA-Minimap)
 local function gpsRoute()
     if not IsWaypointActive() then return nil end
     local wp = GetBlipInfoIdCoord(GetFirstBlipInfoId(8))
-    local route = { wp = { wp.x, wp.y }, pts = {} }
-    local len = GetGpsBlipRouteFound() and GetGpsBlipRouteLength() or 0
-    route.len = len
-    if len > 0 then
-        local step = math.max(Config.Route.step, len / Config.Route.maxPoints)
-        local d = 0.0
-        while d < len do
-            local ok, pos = GetPosAlongGpsTypeRoute(true, d, 0)
-            if ok and pos then route.pts[#route.pts + 1] = { pos.x, pos.y, pos.z } end
-            d = d + step
-        end
+    local route = { wp = { wp.x, wp.y }, pts = {}, len = 0 }
+    local step, maxPoints = Config.Route.step, Config.Route.maxPoints
+    -- lange Strecken: Abstand der Punkte vergrößern, bis die ganze Route hineinpasst
+    for _ = 1, 4 do
+        local pts, len = sampleRoute(0, wp.x, wp.y, step, maxPoints)
+        route.pts, route.len = pts, len
+        if #pts < maxPoints then break end
+        step = step * 2
     end
+    if #route.pts < 2 then route.pts = {} end
     return route
 end
 
@@ -201,6 +225,16 @@ end)
 
 -- andere Scripts können die eigene Minimap kurz ausblenden (z. B. für Cutscenes)
 exports('SetMinimapHidden', function(state) PM.miniHidden = state and true or false end)
+
+-- Position/Sichtbarkeit der 3D-Minimap für HUD-Scripts (z. B. sky_hud), Werte in vh
+exports('GetMinimapState', function()
+    local m = Config.Minimap
+    return {
+        visible = miniVisible(),
+        left = m.left or 2.2, bottom = m.bottom or 3.6,
+        width = m.width or 30, height = m.height or 18.5,
+    }
+end)
 
 AddEventHandler('onResourceStop', function(res)
     if res == GetCurrentResourceName() then DisplayRadar(true) end

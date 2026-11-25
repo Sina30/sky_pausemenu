@@ -942,14 +942,17 @@ function drawOverlay(big) {
             const sp = el.lastElementChild;
             if (sp.textContent !== t) sp.textContent = t;
         }
-        const pts = [];
-        const src = r.pts && r.pts.length ? r.pts : (p ? [[p[0], p[1], p[2]], [r.wp[0], r.wp[1], wz]] : []);
-        for (const q of src) {
+        // Route nur aus echten GTA-Routenpunkten (keine gerade Ersatzlinie).
+        // Punkte hinter der Kamera unterbrechen den Pfad, statt quer zu verbinden.
+        let d = '', pen = false;
+        for (const q of (r.pts || [])) {
             const s = project(q[0], q[1], Math.max(q[2], groundZ(q[0], q[1])) + 1.5);
-            if (s) pts.push(`${s[0].toFixed(1)},${s[1].toFixed(1)}`);
+            if (!s) { pen = false; continue; }
+            d += `${pen ? 'L' : 'M'}${s[0].toFixed(1)},${s[1].toFixed(1)}`;
+            pen = true;
         }
-        line.setAttribute('points', pts.join(' '));
-    } else line.setAttribute('points', '');
+        line.setAttribute('d', d);
+    } else line.setAttribute('d', '');
 
     sweep(M.els);
 

@@ -6,7 +6,7 @@ Ein komplett neues Pausenmenü für FiveM im Stil von GTA VI: eigene **3D-Karte*
 - **Keine Datenbank**, keine Items, keine Abhängigkeiten
 - **Keine Blip-Einrichtung:** jeder Blip, den irgendein Script erstellt, erscheint automatisch auf der Karte
 
-![3D-Karte mit Infokarte](screenshots/02-karte-infokarte.png)
+![3D-Karte mit Infokarte](screenshots/docs/screenshots$1.png)
 
 ## Screenshots
 
